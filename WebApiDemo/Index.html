@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Email Sender App</title>
+</head>
+<body>
+    <h1>Send an email to anyone in our database</h1>
+    <div>
+        <h2>Id:</h2>
+        <input type="text" id="id" size="5" />
+        <input type="button" value="Send Email" onclick="sendEmail()" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+    function sendEmail()
+    {
+        var id = $('#id').val();
+        var test = $('#test').val();
+
+        $.ajax({
+            type: "POST",
+            url: 'api/email/' + id,
+            data: {test: test}
+        });
+    }
+
+    </script>
+</body>
+</html>
