@@ -11,22 +11,12 @@ namespace WebApiDemo.Controllers
 {
     public class EmailController : ApiController
     {
-        new EmailData[] emailDatabase =
-        {
-            new EmailData { Id = 1, EmailAddress = "andrei_spatariu@yahoo.com", FromName = "Daniel" },
-            new EmailData { Id = 2, EmailAddress = "andrei.spatariu@equilobe.com", FromName = "Nicoleta" },
-            new EmailData { Id = 3, EmailAddress = "andrei.spatariu@gmail.com", FromName = "Andreea" }
-        };
-
         [HttpPost]
-        public IHttpActionResult SendEmail(int id)
+        public IHttpActionResult SendEmail(EmailData emailData)
         {
-            var actualData = emailDatabase.First(x => x.Id == id);
+            EmailSender.SendMail(emailData).Wait();
 
-            if (actualData != null)
-                EmailSender.SendMail(actualData.EmailAddress).Wait();
-
-            return NotFound();
+            return Ok();
         }
     }
 }

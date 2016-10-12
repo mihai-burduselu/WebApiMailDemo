@@ -6,8 +6,14 @@
 <body>
     <h1>Send an email to anyone in our database</h1>
     <div>
-        <h2>Id:</h2>
-        <input type="text" id="id" size="5" />
+        <h2>Your Name:</h2>
+        <input type="text" id="fromName" size="5" />
+        <h2>Their Email Address:</h2>
+        <input type="text" id="emailAddress" size="5" />
+        <h2>Subject:</h2>
+        <input type="text" id="subject" size="5" />
+        <h2>Content:</h2>
+        <input type="text" id="content" size="5" />
         <input type="button" value="Send Email" onclick="sendEmail()" />
     </div>
 
@@ -16,13 +22,22 @@
 
     function sendEmail()
     {
-        var id = $('#id').val();
-        var test = $('#test').val();
+        var fromName = $('#fromName').val();
+        var subject = $('#subject').val();
+        var emailAddress = $('#emailAddress').val();
+        var content = $('#content').val()
+
+        var emailData = {
+            FromName: fromName,
+            EmailAddress: emailAddress,
+            Content: content,
+            Subject: subject
+        }
 
         $.ajax({
             type: "POST",
-            url: 'api/email/' + id,
-            data: {test: test}
+            url: 'api/email',
+            data: emailData
         });
     }
 

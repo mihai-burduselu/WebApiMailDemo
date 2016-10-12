@@ -5,24 +5,25 @@ using System.Web;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
+using WebApiDemo.Models;
 
 namespace WebApiDemo.Senders
 {
     public class EmailSender
     {
 
-        public static async Task SendMail(string emailAddress)
+        public static async Task SendMail(EmailData emailData)
         {
-            string apiKey = Environment.GetEnvironmentVariable("WebApiDemo", EnvironmentVariableTarget.User);
-            dynamic sg = new SendGridAPIClient(apiKey);
+            string apiKey = "YOUR_API_KEY";
+            var sg = new SendGridAPIClient(apiKey);
 
-            Email from = new Email("MIC@upb.ro");
-            string subject = "Sal cf";
-            Email to = new Email(emailAddress);
-            Content content = new Content("text/plain", "Salut! Mail-ul asta nu are absolut nici un scop");
+            Email from = new Email(emailData.FromName);
+            string subject = emailData.Subject;
+            Email to = new Email(emailData.EmailAddress);
+            Content content = new Content("text/plain", emailData.Content);
             Mail mail = new Mail(from, subject, to, content);
 
-            dynamic response = await sg.client.mail.send.post(requestBody: mail.Get());
+            var response = await sg.client.mail.send.post(requestBody: mail.Get());
         }
     }
 }
