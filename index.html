@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Webapimaildemo : WebApi">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-    <title>Webapimaildemo</title>
+    <title>Webapimaildemo by AndreiSpatariu</title>
   </head>
 
   <body>
+    <header>
+      <div class="inner">
+        <h1>Webapimaildemo</h1>
+        <h2>WebApi</h2>
+        <a href="https://github.com/AndreiSpatariu/WebApiMailDemo" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/AndreiSpatariu/WebApiMailDemo">View on GitHub</a>
-
-          <h1 id="project_title">Webapimaildemo</h1>
-          <h2 id="project_tagline">WebApi</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/AndreiSpatariu/WebApiMailDemo/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/AndreiSpatariu/WebApiMailDemo/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h2>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h2>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>In this workshop we will take a look at how we can make use of Web API, .NET MVC and an email delivery and management service to implement an email sending web app.
@@ -74,34 +71,81 @@ We will be building the app from the ground up, and hopefully by the end of it y
 <h2>
 <a id="lets-get-started" class="anchor" href="#lets-get-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Let's get started</h2>
 
-<p>As I said, we will be starting from scratch, so we need to fire up <a href="https://www.visualstudio.com/">Visual Studio</a> and create a new project. Select ASP.NET Web Application under the Visual C#'s Web tab. Next, we select Web API and tick the checkboxes for MVC and Web API under "Add folders and core references for:". What  this does is that it creates a template for the project, adding the folders and references for a MVC based project. Now we should be all set-up to start writing some code.</p>
+<p>As I said, we will be starting from scratch, so we need to fire up <a href="https://www.visualstudio.com/">Visual Studio</a> and create a new project. Select ASP.NET Web Application under the Visual C#'s Web tab. Next, we select Web API and tick the checkboxes for MVC and Web API under <code>Add folders and core references for:</code>. What  this does is that it creates a template for the project, adding the folders and references for a MVC based project. Now we should be all set-up to start writing some code.</p>
 
 <h2>
-<a id="creating-the-model" class="anchor" href="#creating-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating the model</h2>
+<a id="creating-the-model" class="anchor" href="#creating-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating the Model</h2>
 
-<p>The model is the bread and butter of our application. What it does is that it manages the data, logic and rules of our application. For this demo, we won't be going too much in depth with this concept, because the model we need for our mail-spamming machine is a very basic one. Remember that we ticked that MVC checkbox when we created the project? Well, now we should be able to see a "Models" folder in our solution explorer. We will create our model there, so create a new class in that folder and we will name it "EmailData".
+<p>The model is the bread and butter of our application. What it does is that it manages the data, logic and rules of our application. For this demo, we won't be going too much in depth with this concept, because the model we need for our mail-spamming machine is a very basic one. Remember that we ticked that MVC checkbox when we created the project? Well, now we should be able to see a <code>Models</code> folder in our solution explorer. We will create our model there, so create a new class in that folder and we will name it <code>EmailData</code>.
 Due to the fact that we do not need a complicated model, we can just go with a few properties that we need in order to send our mail:</p>
 
 <pre><code>public class EmailData
     {
-        public string EmailAddress { get; set; }
-        public string FromName { get; set; }
+        public string ToEmailAddress { get; set; }
+        public string FromEmailAddress { get; set; }
         public string Content { get; set; }
         public string Subject { get; set; }
     }
 </code></pre>
-      </section>
+
+<p>This is our model. We need a ToEmailAddress so we know where to send the mail, a FromEmailAddress so the person receiving it knows where it comes from, the Content of the mail and a Subject.</p>
+
+<h2>
+<a id="integrating-sendgrid-api" class="anchor" href="#integrating-sendgrid-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Integrating SendGrid API</h2>
+
+<p>To install SendGrid, run the following command in the <a href="https://docs.nuget.org/ndocs/tools/package-manager-console">Package Manager Console</a>: <code>Install-Package Sendgrid</code>. Next, we need a class that will act as a 'Sender' for our email and for that we will create a new folder called <code>Senders</code> since it does not belong in any of the folders that we already have. Inside of that folder we will create our <code>EmailSender</code> class called just like that, and we will use the API integration from <a href="https://github.com/sendgrid/sendgrid-csharp">SendGrid's official library</a> and adapt it to our model.</p>
+
+<p>So, this is our class:</p>
+
+<pre><code>using System;
+using SendGrid;
+using SendGrid.Helpers.Mail;
+using System.Threading.Tasks;
+
+namespace Example
+{
+    internal class Example
+    {
+        private static void Main()
+        {
+            Execute().Wait();
+        }
+
+        public static async Task SendMail(EmailData emailData)
+        {
+            string apiKey = "YOUR_API_KEY_HERE";
+            var sg = new SendGridAPIClient(apiKey);
+
+            Email from = new Email(emailData.FromName);
+            string subject = emailData.Subject;
+            Email to = new Email(emailData.EmailAddress);
+            Content content = new Content("text/plain", emailData.Content);
+            Mail mail = new Mail(from, subject, to, content);
+
+            var response = await sg.client.mail.send.post(requestBody: mail.Get());
+        }
+    }
+}
+</code></pre>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/AndreiSpatariu/WebApiMailDemo"></a> is maintained by <a href="https://github.com/AndreiSpatariu">AndreiSpatariu</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Webapimaildemo maintained by <a href="https://github.com/AndreiSpatariu">AndreiSpatariu</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
+  
   </body>
 </html>
