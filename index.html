@@ -1,34 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
+    <title>WEB API &amp; SendGrid API Integration by AndreiSpatariu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
-    <title>WEB API &amp; SendGrid API Integration by AndreiSpatariu</title>
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>WEB API &amp; SendGrid API Integration</h1>
-        <h2>A step by step guide towards creating a Web Application that uses SendGrid to send a mail to a designated email address</h2>
-        <a href="https://github.com/AndreiSpatariu/WebApiMailDemo" class="button"><small>View project on</small> GitHub</a>
-      </div>
-    </header>
+    <section class="page-header">
+      <h1 class="project-name">WEB API &amp; SendGrid API Integration</h1>
+      <h2 class="project-tagline">A step by step guide towards creating a Web Application that uses SendGrid to send a mail to a designated email address</h2>
+      <a href="https://github.com/AndreiSpatariu/WebApiMailDemo" class="btn">View on GitHub</a>
+      <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h2>
+    <section class="main-content">
+      <h2>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>In this workshop we will take a look at how we can make use of Web API, .NET MVC and an email delivery and management service to implement an email sending web app.
@@ -88,12 +79,12 @@ Due to the fact that we do not need a complicated model, we can just go with a f
     }
 </code></pre>
 
-<p>This is our model. We need a ToEmailAddress so we know where to send the mail, a FromEmailAddress so the person receiving it knows where it comes from, the Content of the mail and a Subject.</p>
+<p>This is our model. We need a <code>ToEmailAddress</code> so we know where to send the mail, a <code>FromEmailAddress</code> so the person receiving it knows where it comes from, the <code>Content</code> of the mail and a <code>Subject</code>.</p>
 
 <h2>
 <a id="integrating-sendgrid-api" class="anchor" href="#integrating-sendgrid-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Integrating SendGrid API</h2>
 
-<p>To install SendGrid, run the following command in the <a href="https://docs.nuget.org/ndocs/tools/package-manager-console">Package Manager Console</a>: <code>Install-Package Sendgrid</code>. Next, we need a class that will act as a 'Sender' for our email and for that we will create a new folder called <code>Senders</code> since it does not belong in any of the folders that we already have. Inside of that folder we will create our <code>EmailSender</code> class called just like that, and we will use the API integration from <a href="https://github.com/sendgrid/sendgrid-csharp">SendGrid's official library</a> and adapt it to our model.</p>
+<p>To install SendGrid, run the following command in the <a href="https://docs.nuget.org/ndocs/tools/package-manager-console">Package Manager Console</a>: <code>Install-Package Sendgrid</code>. Next, we need a class that will act as a 'Sender' for our email and for that we will create a new folder called <code>Senders</code> since it does not belong in any of the ones that we already have. Inside of that folder we will create our class called <code>EmailSender</code>, we will use the API integration example from <a href="https://github.com/sendgrid/sendgrid-csharp">SendGrid's official library</a> and adapt it to our own model.</p>
 
 <p>So, this is our class:</p>
 
@@ -127,24 +118,17 @@ namespace Example
     }
 }
 </code></pre>
-        </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/AndreiSpatariu/WebApiMailDemo/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
+<p>Before we dive into what this class does, note that you have to replase <code>YOUR_API_KEY_HERE</code> with <code>you guessed it</code>, your own key, and for that you need a SendGrid account. Luckily, you can get a free subscription that allows you to send 15 000 mails/month using the <a href="https://education.github.com/pack">GitHub Student Pack</a>. You can get more information on what API Keys are and how to create one from the <a href="https://sendgrid.com/docs/User_Guide/Settings/api_keys.html">Official SendGrid Documentation</a>.
+Now, let's get to our class.</p>
 
-          <p class="repo-owner"><a href="https://github.com/AndreiSpatariu/WebApiMailDemo"></a> is maintained by <a href="https://github.com/AndreiSpatariu">AndreiSpatariu</a>.</p>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/AndreiSpatariu/WebApiMailDemo">WEB API &amp; SendGrid API Integration</a> is maintained by <a href="https://github.com/AndreiSpatariu">AndreiSpatariu</a>.</span>
 
-          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
-    </div>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
 
   
   </body>
