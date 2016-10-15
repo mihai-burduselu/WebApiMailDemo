@@ -119,8 +119,25 @@ namespace Example
 }
 </code></pre>
 
-<p>Before we dive into what this class does, note that you have to replase <code>YOUR_API_KEY_HERE</code> with <code>you guessed it</code>, your own key, and for that you need a SendGrid account. Luckily, you can get a free subscription that allows you to send 15 000 mails/month using the <a href="https://education.github.com/pack">GitHub Student Pack</a>. You can get more information on what API Keys are and how to create one from the <a href="https://sendgrid.com/docs/User_Guide/Settings/api_keys.html">Official SendGrid Documentation</a>.
-Now, let's get to our class.</p>
+<p>Note that you have to replace <code>YOUR_API_KEY_HERE</code> with <code>you guessed it</code>, your own key, and for that you need a SendGrid account. Luckily, you can get a free subscription that allows you to send 15 000 mails/month using the <a href="https://education.github.com/pack">GitHub Student Pack</a>. You can get more information on what API Keys are and how to create one from the <a href="https://sendgrid.com/docs/User_Guide/Settings/api_keys.html">Official SendGrid Documentation</a>.</p>
+
+<h2>
+<a id="creating-our-controller" class="anchor" href="#creating-our-controller" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating our Controller</h2>
+
+<p>The <code>Controller</code> is the "controlled" way through which the user interacts with the <code>Model</code>. For our example, we just need one simple method that will receive an object from our <code>View</code> and will call the method that we have just created in our <code>Sender</code>.
+This is our class:</p>
+
+<pre><code>public class EmailController : ApiController
+    {
+        [HttpPost]
+        public IHttpActionResult SendEmail(EmailData emailData)
+        {
+            EmailSender.SendMail(emailData).Wait();
+
+            return Ok();
+        }
+    }
+</code></pre>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/AndreiSpatariu/WebApiMailDemo">WEB API &amp; SendGrid API Integration</a> is maintained by <a href="https://github.com/AndreiSpatariu">AndreiSpatariu</a>.</span>
