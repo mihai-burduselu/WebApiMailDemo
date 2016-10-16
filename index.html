@@ -159,9 +159,9 @@ This is our class:</p>
     &lt;title&gt;Email Sender App&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;h1&gt;Send an email to anyone in our database&lt;/h1&gt;
+    &lt;h1&gt;Send an email to any of your friends&lt;/h1&gt;
     &lt;div&gt;
-        &lt;h2&gt;Your Name:&lt;/h2&gt;
+        &lt;h2&gt;Your Email Address:&lt;/h2&gt;
         &lt;input type="text" id="fromName" size="5" style="width: 100px" /&gt;
         &lt;h2&gt;Their Email Address:&lt;/h2&gt;
         &lt;input type="text" id="emailAddress" size="5" style="width: 100px" /&gt;
@@ -200,6 +200,8 @@ This is our class:</p>
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+
+<p>The first part of the .html file is basic HTML. So, we have four input fields for each of our properties in our <code>Model</code>, each with their own unique ID so that we can get their value later in our function. We also have a button, that calls the <code>sendMail()</code> function. What this function does is that it gets the values from the input fields, it creates a <a href="http://www.json.org/">JSON</a> and sends it to our <code>Controller</code> through an AJAX HTTP POST request. What you have to note is that the JSON is automatically mapped into to the object we specify in out method's parameter.</p>
         </section>
 
         <aside id="sidebar">
