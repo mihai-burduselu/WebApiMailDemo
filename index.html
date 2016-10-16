@@ -80,12 +80,12 @@ We will be building the app from the ground up, and hopefully by the end of it y
 Due to the fact that we do not need a complicated model, we can just go with a few properties that we need in order to send our mail:</p>
 
 <pre><code>public class EmailData
-    {
-        public string ToEmailAddress { get; set; }
-        public string FromEmailAddress { get; set; }
-        public string Content { get; set; }
-        public string Subject { get; set; }
-    }
+{
+    public string ToEmailAddress { get; set; }
+    public string FromEmailAddress { get; set; }
+    public string Content { get; set; }
+    public string Subject { get; set; }
+}
 </code></pre>
 
 <p>This is our model. We need a <code>ToEmailAddress</code> so we know where to send the mail, a <code>FromEmailAddress</code> so the person receiving it knows where it comes from, the <code>Content</code> of the mail and a <code>Subject</code>.</p>
@@ -102,15 +102,10 @@ using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
 
-namespace Example
+namespace WebApiDemo
 {
-    internal class Example
+    internal class EmailSender
     {
-        private static void Main()
-        {
-            Execute().Wait();
-        }
-
         public static async Task SendMail(EmailData emailData)
         {
             string apiKey = "YOUR_API_KEY_HERE";
