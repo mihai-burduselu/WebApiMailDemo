@@ -117,6 +117,5 @@ C:\Facultate\WebApiMailDemo\WebApiDemo\bin\System.Web.WebPages.xml
 C:\Facultate\WebApiMailDemo\WebApiDemo\bin\System.Web.WebPages.Deployment.xml
 C:\Facultate\WebApiMailDemo\WebApiDemo\bin\System.Web.WebPages.Razor.xml
 C:\Facultate\WebApiMailDemo\WebApiDemo\bin\Antlr3.Runtime.pdb
-C:\Facultate\WebApiMailDemo\WebApiDemo\obj\Debug\WebApiDemo.csprojResolveAssemblyReference.cache
 C:\Facultate\WebApiMailDemo\WebApiDemo\obj\Debug\WebApiDemo.dll
 C:\Facultate\WebApiMailDemo\WebApiDemo\obj\Debug\WebApiDemo.pdb

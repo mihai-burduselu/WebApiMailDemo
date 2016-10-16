@@ -14,12 +14,12 @@ namespace WebApiDemo.Senders
 
         public static async Task SendMail(EmailData emailData)
         {
-            string apiKey = "YOUR_API_KEY";
+            string apiKey = "YOUR_API_KEY_HERE";
             var sg = new SendGridAPIClient(apiKey);
 
-            Email from = new Email(emailData.FromName);
+            Email from = new Email(emailData.FromEmailAddress);
             string subject = emailData.Subject;
-            Email to = new Email(emailData.EmailAddress);
+            Email to = new Email(emailData.ToEmailAddress);
             Content content = new Content("text/plain", emailData.Content);
             Mail mail = new Mail(from, subject, to, content);
 
