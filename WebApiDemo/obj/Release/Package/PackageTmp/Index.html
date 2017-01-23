@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Sender App</title>
+</head>
+<body>
+    <h1>Send an email to anyone in our database</h1>
+    <div>
+        <h2>Your Email Address:</h2>
+        <input type="text" id="fromEmailAddress" size="5" />
+        <h2>Their Email Address:</h2>
+        <input type="text" id="toEmailAddress" size="5" />
+        <h2>Subject:</h2>
+        <input type="text" id="subject" size="5" />
+        <h2>Content:</h2>
+        <input type="text" id="content" size="5" />
+        <input type="button" value="Send Email" onclick="sendEmail()" />
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+    function sendEmail()
+    {
+        var fromEmailAddress = $('#fromEmailAddress').val();
+        var subject = $('#subject').val();
+        var toEmailAddress = $('#toEmailAddress').val();
+        var content = $('#content').val()
+
+        var emailData = {
+            FromEmailAddress: fromEmailAddress,
+            ToEmailAddress: toEmailAddress,
+            Content: content,
+            Subject: subject
+        }
+
+        $.ajax({
+            type: "POST",
+            url: 'api/email',
+            data: emailData
+        });
+    }
+
+    </script>
+</body>
+</html>

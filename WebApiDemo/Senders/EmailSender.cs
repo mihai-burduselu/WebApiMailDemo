@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
@@ -14,13 +10,13 @@ namespace WebApiDemo.Senders
 
         public static async Task SendMail(EmailData emailData)
         {
-            string apiKey = "YOUR_API_KEY_HERE";
+            string apiKey = "YOUR API KEY FROM SENDGRID WEBSITE";
             var sg = new SendGridAPIClient(apiKey);
 
             Email from = new Email(emailData.FromEmailAddress);
             string subject = emailData.Subject;
             Email to = new Email(emailData.ToEmailAddress);
-            Content content = new Content("text/plain", emailData.Content);
+            Content content = new Content("text/html", emailData.Content);
             Mail mail = new Mail(from, subject, to, content);
 
             var response = await sg.client.mail.send.post(requestBody: mail.Get());
